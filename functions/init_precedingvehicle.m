@@ -3,6 +3,39 @@ function [pre] = init_precedingvehicle(pre,egv,terrain,param,ns)
 % 
 % This function interprets the preceding vehicle info and outputs vectors
 % for comparison with the EGV data from the DP algorithm
+% 
+%=========================================================================
+% ------------------------------- INPUTS ---------------------------------
+%   pre = structure which contains user input information about the
+%         trajectory of the preceding vehicle
+%     ~.v_in = [km/h] velocity profile of preceding vehicle
+%     ~.x_in = [m] position where the velocity takes place
+% 
+%   egv = structure which contains user input information about the
+%         constraints on the EGV
+%     ~.v.min  = [km/h] minimum speed of the EGV
+%     ~.v.max  = [km/h] maximum speed of the EGV
+%     ~.v.step = [km/h] difference between discrete speed
+% 
+%   terrain = structure with information about the terrain profile
+%     ~.dist = [m] vector containing distance of path
+% 
+%   param = structure which contains conversion factors
+% 
+%   ns  = structure which contains lengths of important vectors
+%     ~.N  = total number of nodes
+%     ~.Nq = number of discrete energy states
+% ------------------------------------------------------------------------
+%
+% ------------------------------ OUTPUTS ---------------------------------
+%   pre = structure which contains information about the preceding vehicle
+%         calculated at each node for comparison with the egv
+%     ~.v = [km/h] vector with the velocity at each node
+%     ~.t = [s] vector containing the time it takes the preceding vehicle 
+%           to travel between the previous and current node
+%     ~.firsnode = index where the preceding vehicle is first defined
+% ------------------------------------------------------------------------
+%=========================================================================
 
 %extract distance between nodes from terrain info
 dx = terrain.dist(2)-terrain.dist(1);
