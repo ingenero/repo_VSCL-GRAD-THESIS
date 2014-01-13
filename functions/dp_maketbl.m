@@ -81,7 +81,7 @@ if ns.k==1
     %do nothing
 else
     matr.SOE(ns.currspd,:,ns.k-1) = matr.SOE(ns.currspd,:,ns.N) + ...
-        tbl.E(ns.currspd,ns.k)/(param.E_max*param.V_bat*param.conv.h2s);
+        tbl.E(ns.currspd,ns.k)/(param.E_max*param.V_bat*param.conv.hr2sec);
     for i=1:ns.Nq
         if matr.SOE(ns.currspd,i,ns.k-1) < param.lim.SOE.min ||...
                 matr.SOE(ns.currspd,i,ns.k-1) > param.lim.SOE.max

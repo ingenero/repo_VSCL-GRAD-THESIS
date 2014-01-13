@@ -75,6 +75,6 @@ for k=i_start:ns.N+1
         opt.SOC(k,1) = param.lim.SOE.ini;
     else
         opt.SOC(k,1) = opt.SOC(k-1,1) - opt.E(k-1,1)/...
-            (param.E_max*param.V_bat*param.conv.h2s);
+            (param.E_max*param.V_bat*param.conv.hr2sec);
     end
 end

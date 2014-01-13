@@ -165,7 +165,7 @@ state.P.total = Pg1.*eta.front + Pg2.*eta.rear;
 
 %--POPULATE VECTORS EITH POSSIBLE STATE VALUES--
 %calculate change in state of charge
-SOC.delta = state.P.total*state.dt/(param.E_max*param.V_bat*h2s);
+SOC.delta = state.P.total*state.dt/(param.E_max*param.V_bat*hr2sec);
 %---------------------------------%
 %------- apply constraints -------%
 %---------------------------------%

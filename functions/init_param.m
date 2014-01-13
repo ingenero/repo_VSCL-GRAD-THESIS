@@ -93,8 +93,8 @@ param.lim.SOE.ini = 0.7; %initial charge of the battery
 param.lim.acc     = 0.1*param.g; %max acceleration rate of EGV
 %conversion factors
 param.conv.km2m	   = 1000; %convert kilometers to meters
-param.conv.h2s	   = 3600; %convert hours to seconds
-param.conv.kmh2mps = param.conv.km2m/param.conv.h2s;
+param.conv.hr2sec  = 3600; %convert hours to seconds
+param.conv.kmh2mps = param.conv.km2m/param.conv.hr2sec;
 
 %--INITIALIZE PARAMETERS TO CALCULATE--
 v2struct(ns); %extract numbers for generating matrices

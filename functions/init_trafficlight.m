@@ -1,4 +1,4 @@
-function [light] = init_trafficlight(light)
+function [light] = init_trafficlight(light,param)
 % light = INIT_TRAFFICLIGHT()
 % 
 % This function interprets the traffic light info and outputs information
@@ -18,6 +18,9 @@ function [light] = init_trafficlight(light)
 %     ~.signal = [s] cell with vectors specifying each traffic light timing 
 % ------------------------------------------------------------------------
 %=========================================================================
+
+%extract useful conversion factors from structure
+v2struct(param.conv)
 
 NumOfLights = length(light.pos); %find the number of lights
 NumOfStates = 10; %set number of traffic signal states
@@ -56,7 +59,7 @@ for i=1:NumOfLights
     end
     
     %store signal vectors in traffic light structure
-    light.signal{i} = signal;
+    light.signal{i} = signal';
 end
 
 %calculate the timing windows for the egv to hit green lights
@@ -71,7 +74,7 @@ for i=1:NumOfLights
         %find distance between lights
         dx = light.pos(i);
         %find average velocity bounds
-        v_avg{1} = dx./(t_end'-t_start);
+        v_avg{1} = dx./(t_end-t_start)/kmh2mps;
     else
         for ii=1:NumOfStates+1
             %find the starting time
@@ -88,7 +91,7 @@ for i=1:NumOfLights
             dx = light.pos(i)-light.pos(i-1);
 
             %find average velocity bounds
-            v_avg{ii} = dx./(t_end'-t_start);
+            v_avg{ii} = dx./(t_end-t_start)/kmh2mps;
         end
     end
     light.vs{i} = v_avg;

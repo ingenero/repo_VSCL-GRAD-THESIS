@@ -1,4 +1,4 @@
-function [axis_handle,i_traffic] = post_plot(view,terrain,opt,param)
+function [axis_handle,i_traffic] = post_plot(view,terrain,opt,param,figstart)
 % POST_PLOT(view,terrain,opt,param)
 % 
 % This function plots the results of the DP in a way specified by the user
@@ -74,12 +74,12 @@ switch view.results.x
 end
 
 %sort inputs into different figures
-for fignum = 1:numOfFigs
+for fignum = figstart:(figstart-1)+numOfFigs
     %clear variables and create a new figure
     clear cmparray cellsize rawname; figure(fignum)
     
     %get data to plot in current figure
-    cmparray = strncmp(input,num2str(fignum),1);
+    cmparray = strncmp(input,num2str(fignum-figstart+1),1);
     currinput = input(cmparray);
     numofaxes = length(currinput);
     

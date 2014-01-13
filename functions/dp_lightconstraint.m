@@ -41,25 +41,65 @@ else
     i_start = 1;
 end
 
-%CHECK TO SEE IF THE EGV GETS STUCK AT THE NEST LIGHT
+%CHECK TO SEE IF THE EGV GETS STUCK AT THE NEXT LIGHT
 if k==i_start
     opt = post_getopt(opt,tbl,vect,egv,param,ns);
     v_avg = mean(opt.v(i_start:i_end));
     
-    for i=1:length(light.vs)
-        for ii=1:length(light.vs{i})
-            for iii=1:length(light.vs{i}{ii})-1
-                if v_avg>light.vs{i}{ii}(iii) && v_avg<light.vs{i}{ii}(iii+1)
-                    disp('light ok')
-                    break
-                end
+    for i=1:length(light.vs{iL})
+        v_vect = light.vs{iL}{i};
+        for ii=1:length(v_vect)-1
+            if ii==1
+                spd_hi = egv.v.max+1;
+                spd_lo = v_vect(ii);
+            elseif rem(ii,2)==0
+                spd_hi = v_vect(ii);
+                spd_lo = v_vect(ii+1);
+            else
+                spd_hi = v_vect(ii-1);
+                spd_lo = v_vect(ii);
+            end
+
+            if v_avg>spd_lo && v_avg<spd_hi
+%                 disp('GREEN LIGHT!')
+                return
             end
         end
     end
     
-%     disp('light NOT ok')
-%     ns.k = i_end;
-%     ns.speedLimit = [];
+%     disp('RED LIGHT!')
+    for i=1:length(light.vs{iL})
+        v_vect = light.vs{iL}{i};
+        for ii=1:length(v_vect)-1
+            if ii==1
+                spd_hi = egv.v.max+1;
+                spd_lo = v_vect(ii);
+            elseif rem(ii,2)==0
+                spd_hi = v_vect(ii);
+                spd_lo = v_vect(ii+1);
+            else
+                spd_hi = v_vect(ii-1);
+                spd_lo = v_vect(ii);
+            end
+
+            if spd_hi<egv.v.max+1 && spd_lo>egv.v.min-1
+                ns.speedLimit = [spd_hi spd_lo];
+                ns.k = i_end;
+                return
+            elseif spd_hi<egv.v.max+1 && spd_hi>egv.v.min
+                ns.speedLimit(1) = spd_hi;
+                ns.k = i_end;
+                return
+            elseif spd_lo>egv.v.min-1 && spd_lo<egv.v.max
+                ns.speedLimit(2) = spd_lo;
+                ns.k = i_end;
+                return
+            else
+                continue
+            end
+        end
+    end
+    error('Making the light is not possible.')
 end
 
 

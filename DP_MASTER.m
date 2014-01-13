@@ -14,7 +14,7 @@ end
 %% User Input
 %--ELECTRIC GROUND VEHICLE (egv)
 egv.v.min  = 25;    %[km/h] minimum allowable velocity
-egv.v.max  = 33;    %[km/h] maximum allowable velocity
+egv.v.max  = 35;    %[km/h] maximum allowable velocity
 egv.v.step = 1;     %[km/h] difference between discrete velocities
 egv.v.v0   = 28;    %[km/h] starting velocity
 egv.v.vN   ='free'; %[km/h] ending velocity ('free' if unspecified)
@@ -23,22 +23,24 @@ egv.x.xN   ='last'; %[m]    ending point of EGV ('last' for full road)
 
 %--PRECEDING VEHICLE (pre)
 pre.exist = 'n'; %is there a preceding vehicle? (y/n)
-pre.v_in  = [29  28 32]; %[km/h] velocity profile
-pre.x_in  = [37 600 2450]; %[m] position where velocity takes place
+pre.v_in  = 28; %[km/h] velocity profile
+pre.x_in  = 50; %[m] position where velocity takes place
 
 %--TRAFFIC LIGHT (light)
-light.exist  = 'y'; %are there any stop lights? (y/n)
-light.pos    = [500]; %[m] position of each traffic light
+light.exist  = 'n'; %are there any stop lights? (y/n)
+% light.pos    = [800 1600]; %[m] position of each traffic light
+% light.intype = {'auto','auto'};
+light.pos    = 1200; %[m] position of each traffic light
 light.intype = {'auto'};
-light.green  = 100; %[s] duration of green (for 'auto' type)
-light.red    = 10; %[s] duration of red (for 'auto' type)
+light.green  = 40; %[s] duration of green (for 'auto' type)
+light.red    = 40; %[s] duration of red (for 'auto' type)
 
 %--PLOT/VEIWING OPTIONS
 view.progress     = 'waitbar';
 view.results.y    = {'1_time','1_velocity','1_terrain'};
 % view.results.y    = {'1_SOC','1_velocity','1_torques','1_time','1_terrain'};
 view.results.x    = 'distance';
-view.results.figs = 2; %set the number of figures to create
+view.results.figs = 1; %set the number of figures to create
 
 %--FILES TO IMPORT
 %name of folder where the data and other .m files are located
@@ -119,7 +121,7 @@ if strcmp(pre.exist,'y')
 end
 %set timing and position of the traffic lights for constraint of the egv
 if strcmp(light.exist,'y')
-    light = init_trafficlight(light);
+    light = init_trafficlight(light,param);
 end
 
 
@@ -131,6 +133,7 @@ ns.k = ns.N;
 iteration_num = 1;
 ns.speedLimit = [egv.v.max+1 egv.v.min];
 ns.iL = length(light.pos); %number of lights
+h_wb = waitbar(0,'Calculating Optimal Trajectory...');
 
 while ns.k >= 1
     %calculate slope of the stage at the current iteration
@@ -140,12 +143,14 @@ while ns.k >= 1
     [matr,tbl] = dp_findoptspeeds(...
         egv,pre,light,slope,state,statevect,vect,matr,tbl,constraint,param,ns);
     
-    %view current progress
-    perccount(iteration_num,ns.N)
-    
     %proceed to the previous position in the path
-    ns.k = ns.k-1; 
+    ns.k = ns.k-1;
     iteration_num = iteration_num+1;
+    
+    %view current progress
+    percent_done = (ns.N-ns.k)/ns.N*100;
+    waitbar(percent_done/100,h_wb,...
+        ['Calculating Optimal Trajectory... (' num2str(percent_done) '%)']);
     
     %traffic light constraint
     if strcmp(light.exist,'y')
@@ -156,7 +161,7 @@ end
 
 
 %% Post Processing
-close all
+% close all; delete(h_wb)
 
 opt = post_getopt(opt,tbl,vect,egv,param,ns);
 if strcmp(pre.exist,'y')
@@ -164,7 +169,7 @@ if strcmp(pre.exist,'y')
 else
     [opt.t_cum] = post_getpos(opt,pre,ns);
 end
-[h_axes,i_time] = post_plot(view,terrain,opt,param);
+[h_axes,i_time] = post_plot(view,terrain,opt,param,1);
 
 %plot preceding vehicle trajectory and traffic light timing
 post_plottraffic(pre,light,terrain,opt,h_axes,i_time)
@@ -176,7 +181,7 @@ sound.wvlngth = length(sound.data);
 sound.time = linspace(0, sound.wvlngth/sound.freq, sound.wvlngth);
 
 %increase volume and play sound
-sound.amp = sound.data*1;
+sound.amp = sound.data*.1;
 sound.obj =  audioplayer(sound.amp,sound.freq);
 play(sound.obj)
 
