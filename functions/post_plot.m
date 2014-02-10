@@ -122,11 +122,13 @@ for fignum = figstart:(figstart-1)+numOfFigs
         
         %plot data
         if strcmp(rawname,'terrain')% || strcmp(rawname,'SOC')
-            bar(xData,yData,'FaceColor',[0.7 0.7 1],'EdgeColor','b')
-            ylim([175 325])
+            h = area(xData,yData,'FaceColor',[0.7 0.7 1],'EdgeColor','b');
+%             hp = findobj(h,'type','patch');
+%             hatchfill(hp,'single')
+            ylim([245 290])
             hold on
         end
-        plot(xData,yData,'LineWidth',2)
+        plot(xData,yData,'LineWidth',2);
         ylabel(yName); xlabel(xName);
         
         datasz = size(yData);

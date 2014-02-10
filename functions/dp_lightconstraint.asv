@@ -104,10 +104,7 @@ if k==i_start
         end
     end
     warning('Making the light is not possible within constraints.')
-%     [~,new_spd_i(1)] = min(abs(light.vs{iL}{1}-egv.v.max));
-%     [~,new_spd_i(2)] = min(abs(light.vs{iL}{1}-egv.v.min));
-%     new_spd = min(light.vs{iL}{1}(new_spd_i));
-%     ns.speedLimit = [new_spd new_spd];
+    
 end
 
 

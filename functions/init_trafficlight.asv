@@ -24,7 +24,7 @@ v2struct(param.conv)
 
 NumOfLights = length(light.pos); %find the number of lights
 NumOfStates = 10; %set number of traffic signal states
-pattern = [10 110 210 300]; %[red_begin, red_end, red_begin, red_end,...]
+pattern = [40 50 120 130];
 
 %set traffic signal vector for each position according to use input
 for i=1:NumOfLights

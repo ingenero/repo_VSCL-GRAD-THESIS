@@ -77,21 +77,23 @@ if length(i_traffic)==2
     if strcmp(light.exist,'y')
         %plot stop lights
         for i=1:length(light.signal)
+            line([light.pos(i) light.pos(i)],ylim,...
+                    'Color','g','LineStyle','-','LineWidth',3)
             for ii=1:2:length(light.signal{i})
                 line([light.pos(i) light.pos(i)],...
                     [light.signal{i}(ii) light.signal{i}(ii+1)],...
-                    'Color','k','LineStyle','-','LineWidth',3)
+                    'Color','r','LineStyle','-','LineWidth',3)
             end
         end
 
         %create legend
         if ~exist('h_pre','var')
-            legend('EGV','Light Timing','Location','SE')
+            legend('EGV','Green Light','Red Light','Location','NW')
         elseif logical(h_coll)
-            legend('EGV','Pre Veh.','Collisions','Light Timing',...
-                'Location','SE')
+            legend('EGV','Pre Veh.','Collisions','Green Light',...
+                'Red Light','Location','SE')
         else
-            legend('EGV','Pre Veh.','Light Timing',...
+            legend('EGV','Pre Veh.','Green Light','Red Light',...
                 'Location','SE')
         end
 

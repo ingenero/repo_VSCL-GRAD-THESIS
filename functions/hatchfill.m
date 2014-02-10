@@ -1,46 +1,46 @@
 function H = hatchfill(A,STYL,ANGLE,SPACING,FACECOL)
-%% HATCHFILL Hatching and speckling of patch objects
-%%   HATCHFILL(A) fills the patch(es) with handle(s) A.
-%%   A can be a vector of handles or a single handle.
-%%   If A is a vector, then all objects of A should
-%%   be part of the same group for predictable results.
-%%   The hatch consists of black lines angled at
-%%   45 degrees spaced 5 pixels apart, with no color
-%%   filling between the lines.
-%%
-%%   HATCHFILL(A,STYL) applies STYL pattern with default paramters.
-%%      - STYL can be 'single' for single lines (the default),
-%%      'cross' for a double-crossed hatch, 'speckle' for
-%%      speckling inside the patch boundary, and 'outspeckle' for
-%%      for speckling outside the boundary. 'fill' will
-%%      apply only a gray fill and no hatching.
-%%
-%%   HATCHFILL(A,STYL,ANGLE,SPACING) applies a hatch/speckle with
-%%   customized parameters:
-%%      - ANGLE sets the angle of hatch lines. For speckling, it 
-%%      controls the width of the speckling region.
-%%      - SPACING controls the spacing of hatch lines or the
-%%      density of speckle points.
-%%      If STYL is 'fill', then ANGLE and SPACING are ignored.
-%%
-%%   HATCHFILL(A,STYL,ANGLE,SPACING,FACECOL) allows the user
-%%   to specify a fill color. (The default is 'none'.)
-%%
-%%   H = HATCHFILL(...) returns handles to the line objects
-%%   comprising the hatch/speckle.
-%%
-%%   Examples:
-%%       Gray region with hatching:
-%%       hh = hatchfill(a,'cross',45,5,[0.5 0.5 0.5]);
-%%
-%%       Speckled region:
-%%       hatchfill(a,'speckle',7,1);
-%%
-%%   NOTE: This function depends on the script hatch_xy.m
-%%   based on the work of R. Pawlowicz, K. Pankratov, and
-%%   Iram Weinstein.
-%%
-%%   Neil Tandon 11 Jul 2011
+% HATCHFILL Hatching and speckling of patch objects
+%   HATCHFILL(A) fills the patch(es) with handle(s) A.
+%   A can be a vector of handles or a single handle.
+%   If A is a vector, then all objects of A should
+%   be part of the same group for predictable results.
+%   The hatch consists of black lines angled at
+%   45 degrees spaced 5 pixels apart, with no color
+%   filling between the lines.
+%
+%   HATCHFILL(A,STYL) applies STYL pattern with default paramters.
+%      - STYL can be 'single' for single lines (the default),
+%      'cross' for a double-crossed hatch, 'speckle' for
+%      speckling inside the patch boundary, and 'outspeckle' for
+%      for speckling outside the boundary. 'fill' will
+%      apply only a gray fill and no hatching.
+%
+%   HATCHFILL(A,STYL,ANGLE,SPACING) applies a hatch/speckle with
+%   customized parameters:
+%      - ANGLE sets the angle of hatch lines. For speckling, it 
+%      controls the width of the speckling region.
+%      - SPACING controls the spacing of hatch lines or the
+%      density of speckle points.
+%      If STYL is 'fill', then ANGLE and SPACING are ignored.
+%
+%   HATCHFILL(A,STYL,ANGLE,SPACING,FACECOL) allows the user
+%   to specify a fill color. (The default is 'none'.)
+%
+%   H = HATCHFILL(...) returns handles to the line objects
+%   comprising the hatch/speckle.
+%
+%   Examples:
+%       Gray region with hatching:
+%       hh = hatchfill(a,'cross',45,5,[0.5 0.5 0.5]);
+%
+%       Speckled region:
+%       hatchfill(a,'speckle',7,1);
+%
+%   NOTE: This function depends on the script hatch_xy.m
+%   based on the work of R. Pawlowicz, K. Pankratov, and
+%   Iram Weinstein.
+%
+%   Neil Tandon 11 Jul 2011
 
 % set defaults:
 if nargin == 1
