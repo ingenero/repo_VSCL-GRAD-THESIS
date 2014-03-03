@@ -104,11 +104,9 @@ for fignum = figstart:(figstart-1)+numOfFigs
             case 'torques'
                 [x,y1] = stairs(xData,opt.T.front);
                 [~,y2] = stairs(xData,opt.T.rear);
-                xTemp = xData;
-                xData = x;
-                yData = [y1 y2];
+                yT = [y1 y2];
                 yName = 'Torque (N-m)';
-                clear x y1 y2
+                clear y1 y2
             case 'distance'
                 %integrate to get position of the vehicle
                 yData = cumtrapz(opt.t_cum,opt.v*param.conv.kmh2mps);
@@ -131,14 +129,11 @@ for fignum = figstart:(figstart-1)+numOfFigs
 %             hatchfill(hp,'single')
             ylim([245 290])
             hold on
+        elseif strcmp(rawname,'torques')
+            plot(xT,yT,'LineWidth',2)
         end
-        %------------------------------%
         plot(xData,yData,'LineWidth',2);
         ylabel(yName); xlabel(xName);
-        %------------------------------%
-        if strcmp(rawname,'torques')
-            xData = xTemp;
-        end
         
         datasz = size(yData);
         if datasz(2)>1

@@ -13,12 +13,12 @@ end
 
 %% User Input
 %--ELECTRIC GROUND VEHICLE (egv)
-egv.v.min  = 33;    %[km/h] minimum allowable velocity
-egv.v.max  = 33;    %[km/h] maximum allowable velocity
+egv.v.min  = 24;    %[km/h] minimum allowable velocity
+egv.v.max  = 32;    %[km/h] maximum allowable velocity
 egv.v.step = 1;     %[km/h] difference between discrete velocities
-egv.v.v0   = 33;    %[km/h] starting velocity
+egv.v.v0   = 28;    %[km/h] starting velocity
 egv.v.vN   ='free'; %[km/h] ending velocity ('free' if unspecified)
-egv.x.step = 30;     %[m]    distance between discrete nodes
+egv.x.step = 30;    %[m]    distance between discrete nodes
 egv.x.xN   ='last'; %[m]    ending point of EGV ('last' for full road)
 
 %--PRECEDING VEHICLE (pre)
@@ -37,8 +37,8 @@ light.red    = 60; %[s] duration of red (for 'auto' type)
 
 %--PLOT/VEIWING OPTIONS
 view.progress     = 'waitbar';
-view.results.y    = {'1_time','1_velocity','1_SOC','1_terrain'};
-% view.results.y    = {'1_SOC','1_torques','1_velocity','1_terrain'};
+% view.results.y    = {'1_time','1_velocity','1_SOC','1_terrain'};
+view.results.y    = {'1_SOC','1_torques','1_velocity','1_terrain'};
 view.results.x    = 'distance';
 view.results.figs = 1; %set the number of figures to create
 

@@ -103,7 +103,7 @@ state.T.rear  = state.P.rear./state.w.rear;
 %---------------------------------%
 %1: torque boundary constraints
 constraint.T.range = find(state.T.rear>=param.lim.T2.min & ...
-    state.T.rear<=param.lim.T2.max);
+  state.T.rear<=param.lim.T2.max);
   state.T.front = state.T.front(constraint.T.range);
   state.T.rear  = state.T.rear(constraint.T.range);
 %2: torque terrain (normal force) constraints
